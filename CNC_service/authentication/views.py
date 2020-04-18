@@ -27,6 +27,8 @@ class CustomUserCreate(APIView):
             stuff = Stuff.objects.get(FIO=FIO)
             data['phone'] = stuff.phone
             data['position'] = stuff.position
+            data['workshop'] = stuff.workshop
+            data['area'] = stuff.area
             flag = False
         except:
             flag = True
@@ -35,6 +37,8 @@ class CustomUserCreate(APIView):
                 stuff = Stuff.objects.get(email=email)
                 data['phone'] = stuff.phone
                 data['position'] = stuff.position
+                data['workshop'] = stuff.workshop
+                data['area'] = stuff.area
                 flag = False
             except:
                 flag = True
