@@ -7,6 +7,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import *
 from .serializers import *
 from stuff.models import Stuff
+from factory_manager.models import Area, Workshop
+from django.conf import settings
 
 
 class ObtainTokenPairWithColorView(TokenObtainPairView):
@@ -22,32 +24,38 @@ class CustomUserCreate(APIView):
         model = Stuff
         FIO = data['surname'] + " " + data['name'] + " " + data['second_name']
         email = data['email']
+        stuff = None
         flag = False
         try:
             stuff = Stuff.objects.get(FIO=FIO)
+            stuff = Stuff.objects.get(email=email)
             data['phone'] = stuff.phone
             data['position'] = stuff.position
-            data['workshop'] = stuff.workshop
-            data['area'] = stuff.area
             flag = False
         except:
             flag = True
         if flag:
             try:
+                stuff = Stuff.objects.get(FIO=FIO)
                 stuff = Stuff.objects.get(email=email)
                 data['phone'] = stuff.phone
                 data['position'] = stuff.position
-                data['workshop'] = stuff.workshop
-                data['area'] = stuff.area
                 flag = False
             except:
                 flag = True
         serializer = CustomUserSerializer(data = data)
         if flag:
             print("user not found")
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response("user not found", status=status.HTTP_400_BAD_REQUEST)
         if serializer.is_valid():
             user = serializer.save()
+            true_user = CustomUser.objects.get(
+                email=data['email'])
+            workshop = Workshop.objects.get(name=stuff.workshop)
+            area = Area.objects.get(name=stuff.area)
+            true_user.workshop = workshop
+            true_user.area = area
+            true_user.save()
             if user:
                 json = serializer.data
                 return Response(json, status=status.HTTP_201_CREATED)

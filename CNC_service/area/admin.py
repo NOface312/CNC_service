@@ -1,3 +1,4 @@
 from django.contrib import admin
+from .models import Request_For_Boss_Repair
 
-# Register your models here.
+admin.site.register(Request_For_Boss_Repair)

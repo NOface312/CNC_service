@@ -17,6 +17,7 @@ class Boss_Area_Main extends Component {
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
             axiosInstance.defaults.headers['Authorization'] = null;
+            this.props.history.push("/login/");
             return response;
         }
         catch (e) {

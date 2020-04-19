@@ -1,16 +1,6 @@
 from django.db import models
-from workshop.models import Workshop
-from authentication.models import CustomUser
-
-class Area(models.Model):
-    name = models.CharField(max_length=120)
-    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
-
-
-#станок
-class CNC(models.Model):
-    name = models.CharField(max_length=120)
-    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+from django.conf import settings
+from factory_manager.models import Workshop, Area, CNC
 
 
 class Request_For_Boss_Repair(models.Model):
@@ -27,8 +17,10 @@ class Request_For_Boss_Repair(models.Model):
 
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
     cnc = models.ForeignKey(CNC, on_delete=models.CASCADE)
-    boss_area = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    boss_repair = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    boss_area = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='boss_area_boss_repair')
+    boss_repair = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='boss_repair_boss_repair')
     date = models.DateTimeField(auto_now=True)
     comment = models.TextField()
 
@@ -37,3 +29,4 @@ class Request_For_Boss_Repair(models.Model):
 
     type_request = models.CharField(
         max_length=120, choices=STATUS_CHOICES, blank=True, null=True, default='Отправлено')
+

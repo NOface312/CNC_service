@@ -1,9 +1,6 @@
 from django.db import models
-from authentication.models import CustomUser
-from area.models import Area
-
-class Workshop(models.Model):
-    name = models.CharField(max_length=120)
+from django.conf import settings
+from factory_manager.models import Workshop, Area, CNC
 
 
 class Request_For_Trouble(models.Model):
@@ -15,8 +12,10 @@ class Request_For_Trouble(models.Model):
     )
 
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
-    boss_workshop = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    boss_area = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    boss_workshop = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='boss_workshop_trouble')
+    boss_area = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='boss_area_trouble')
     comment = models.TextField()
     
     status = models.CharField(
