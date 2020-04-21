@@ -6,10 +6,10 @@ class Boss_Workshop_Main extends Component {
     constructor(props) {
         super(props);
         this.state;
-        this.handleLogout = this.handleLogout.bind(this)
+        //this.handleLogout = this.handleLogout.bind(this)
     }
 
-    async handleLogout() {
+    /*async handleLogout() {
         try {
             const response = await axiosInstance.post('/blacklist/', {
                 "refresh_token": localStorage.getItem("refresh_token")
@@ -23,12 +23,15 @@ class Boss_Workshop_Main extends Component {
         catch (e) {
             console.log(e);
         }
-    };
+    };*/
 
+    /*<button onClick={this.handleLogout}>Выйти</button>*/
     render() {
         return (
-            <div>Начальник цеха
-                <button onClick={this.handleLogout}>Выйти</button>
+            <div>
+                Начальник цеха
+                Главная
+                Здесь будет статистика
             </div>
         )
     }
