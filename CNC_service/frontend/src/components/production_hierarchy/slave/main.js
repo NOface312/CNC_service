@@ -27,9 +27,10 @@ class Slave_Main extends Component {
 
     render() {
         return (
-            <div>Работник
-                <button onClick={this.handleLogout}>Выйти</button>
-            </div>
+        <div>
+            Роботнег
+            <div><button onClick={this.handleLogout}>Выйти</button></div>
+      </div>
         )
     }
 }
