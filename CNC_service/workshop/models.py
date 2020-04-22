@@ -16,6 +16,8 @@ class Request_For_Trouble(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='boss_workshop_trouble')
     boss_area = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='boss_area_trouble')
+    date_request = models.DateTimeField(auto_now=True)
+    date_deadline = models.DateTimeField(auto_now=True)
     comment = models.TextField()
     
     status = models.CharField(

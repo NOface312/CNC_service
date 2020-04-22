@@ -68,6 +68,7 @@ class Boss_Workshop_Main extends Component {
         }
     };
 
+    /*<button onClick={this.handleLogout}>Выйти</button>*/
     render() {
         return (
             <div>

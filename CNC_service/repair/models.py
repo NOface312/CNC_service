@@ -17,4 +17,6 @@ class Request_For_Repair(models.Model):
     status = models.CharField(
         max_length=120, choices=STATUS_CHOICES, blank=True, null=True, default='Отправлено')
     comment = models.TextField()
+    date_request = models.DateTimeField(auto_now=True)
+    date_deadline = models.DateTimeField(auto_now=True)
     cnc = models.ForeignKey(CNC, on_delete=models.CASCADE)
