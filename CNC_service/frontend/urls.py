@@ -4,5 +4,5 @@ from .views import index as index_view
 
 urlpatterns = [
     path('', index_view),  # for the empty url
-    #url(r'^.*/$', index_view)  # for all other urls
+    url(r'^.*/$', index_view)  # for all other urls
 ]

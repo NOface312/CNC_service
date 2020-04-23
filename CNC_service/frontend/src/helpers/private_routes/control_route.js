@@ -12,16 +12,16 @@ function Check_User(props) {
     var position = decoded.position
     switch (position) {
         case "Начальник цеха":
-            props.history.push("/workshop/");
+            props.history.push("/workshop/home/");
             break;
         case "Начальник участка":
-            props.history.push("/area/");
+            props.history.push("/area/home/");
             break;
         case "Начальник ремонтной службы":
-            props.history.push("/repair/");
+            props.history.push("/repair/home/");
             break;
         case "Работник":
-            props.history.push("/worker/");
+            props.history.push("/worker/home/");
             break;
         default:
             console.log("error"); 

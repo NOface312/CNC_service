@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import axiosInstance from "./../../../axios/axiosAPI";
-import LineChart from "../../charts/linechart"
+import Workshop_Menu from "./../../../helpers/menus/workshop_menu";
+import LineChart from "../../charts/linechart";
 
-function getRandomDateArray(numItems) {
+/*function getRandomDateArray(numItems) {
     // Create random array of objects (with date)
     let data = [];
     let baseTime = new Date('2018-05-01T00:00:00').getTime();
@@ -33,62 +34,40 @@ function getRandomDateArray(numItems) {
       },
     ];
     return data;
-  }
+  }*/
 
 class Boss_Workshop_Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: getData()
+            /*data: getData()*/
           };
-        this.handleLogout = this.handleLogout.bind(this)
     }
 
-    componentDidMount() {
+    /*componentDidMount() {
         window.setInterval(() => {
           this.setState({
             data: getData(this.state.data[0])
           })
         }, 10000)
-      }
-
-    async handleLogout() {
-        try {
-            const response = await axiosInstance.post('/blacklist/', {
-                "refresh_token": localStorage.getItem("refresh_token")
-            });
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('refresh_token');
-            axiosInstance.defaults.headers['Authorization'] = null;
-            this.props.history.push("/login/");
-            return response;
-        }
-        catch (e) {
-            console.log(e);
-        }
-    };
-
-    /*<button onClick={this.handleLogout}>Выйти</button>*/
+      }*/
     render() {
         return (
             <div>
-        <div>
-            <div className="SlaveCharts">
-                <For each="data" in={this.state}>
-                <div className="main chart-wrapper">
-                    <LineChart
-                        data={data.data}
-                        title={data.title}
-                        color="#3E517A"
-                    />
-                </div>
-                </For>
-            </div>
-      </div>
-                <button onClick={this.handleLogout}>Выйти</button>
+              <Workshop_Menu/>
             </div>
         )
     }
 }
-
+/*<div className="SlaveCharts">
+    <For each="data" in={this.state}>
+      <div className="main chart-wrapper">
+          <LineChart
+              data={data.data}
+              title={data.title}
+              color="#3E517A"
+          />
+      </div>
+    </For>
+</div>*/
 export default Boss_Workshop_Main;

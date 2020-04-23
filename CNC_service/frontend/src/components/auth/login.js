@@ -36,8 +36,6 @@ class Login extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         try {
-            console.log("this.state.username");
-            console.log(this.state.username);
             const response = await axiosInstance.post('/token/obtain/', {
                 username: this.state.username,
                 password: this.state.password
