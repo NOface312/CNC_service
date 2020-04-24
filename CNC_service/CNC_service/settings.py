@@ -48,8 +48,8 @@ INSTALLED_APPS = [
     'area',
     'workshop',
     'repair',
-    'frontend',
     'factory_manager',
+    'frontend',
 ]
 
 MIDDLEWARE = [

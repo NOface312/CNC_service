@@ -13,7 +13,7 @@ class Request_For_TroubleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Request_For_Trouble
         fields = ('name', 'area', 'boss_workshop',
-                  'boss_area', 'date_request', 'date_deadline', 'comment', 'status')
+                  'boss_area', 'date_request', 'date_deadline', 'comment', 'status', 'pk')
 
     def create(self, validated_data):
         return Request_For_Trouble.objects.create(**validated_data)

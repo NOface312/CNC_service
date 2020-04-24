@@ -7,7 +7,7 @@ class WorkshopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Workshop
-        fields = ('name',)
+        fields = ('name', 'pk')
 
     def create(self, validated_data):
         return Workshop.objects.create(**validated_data)
@@ -19,7 +19,7 @@ class AreaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Area
-        fields = ('name', 'workshop')
+        fields = ('name', 'workshop', 'pk')
 
     def create(self, validated_data):
         return Area.objects.create(**validated_data)
@@ -31,7 +31,7 @@ class CNCSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CNC
-        fields = ('name', 'area', 'status')
+        fields = ('name', 'area', 'status', 'pk')
 
     def create(self, validated_data):
         return CNC.objects.create(**validated_data)

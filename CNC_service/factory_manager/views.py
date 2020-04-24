@@ -16,9 +16,10 @@ class Workshop_API_LIST(APIView):
     def get(self, request):
         workshop = Workshop.objects.all()
         serializer = WorkshopSerializer(workshop, many = True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def post(self, request, format='json'):
+    def post(self, request):
+        print("faf")
         data = request.data
         serializer = WorkshopSerializer(data=data)
         if serializer.is_valid():
@@ -38,12 +39,13 @@ class Workshop_API_DETAIL(APIView):
         except Workshop.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
+    def get(self, request, pk, format='json'):
         workshop = self.get_object(pk)
         serializer = WorkshopSerializer(workshop)
         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
+    def put(self, request, pk, format='json'):
+        print(pk)
         workshop = self.get_object(pk)
         serializer = WorkshopSerializer(workshop, data=request.data)
         if serializer.is_valid():
@@ -51,7 +53,7 @@ class Workshop_API_DETAIL(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
+    def delete(self, request, pk, format='json'):
         workshop = self.get_object(pk)
         workshop.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

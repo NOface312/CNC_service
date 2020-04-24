@@ -13,7 +13,7 @@ class Request_For_RepairSerializer(serializers.ModelSerializer):
     class Meta:
         model = Request_For_Repair
         fields = ('name', 'cnc', 'boss_repair',
-                  'worker', 'date_request', 'date_deadline', 'comment', 'status')
+                  'worker', 'date_request', 'date_deadline', 'comment', 'status', 'pk')
 
     def create(self, validated_data):
         return Request_For_Repair.objects.create(**validated_data)
