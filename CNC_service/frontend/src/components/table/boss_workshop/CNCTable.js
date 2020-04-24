@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {BootstrapTable, TableHeaderColumn} 
         from 'react-bootstrap-table'
 import "../../../../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css"
+import "../css/Table.css"
 
 
 class WorkshopTable extends Component {
@@ -39,7 +40,10 @@ class WorkshopTable extends Component {
    render() {
      return (
       <BootstrapTable data={this.props.data}>
-       <TableHeaderColumn dataField='name' isKey>
+       <TableHeaderColumn dataField='number' isKey>
+          Номер
+        </TableHeaderColumn>
+        <TableHeaderColumn dataField='name'>
           Имя
         </TableHeaderColumn>
         <TableHeaderColumn dataField='area'>
