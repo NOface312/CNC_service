@@ -24,7 +24,8 @@ import Slave_Main from './production_hierarchy/slave/main';
 
 
 //Test Components
-import API_Test from './test/api test';
+import API_Test from './test/api_test';
+import Modale_Window_Test from './test/modale_window_test';
 
 
 import { ControlRoute } from './../helpers/private_routes/control_route';
