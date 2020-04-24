@@ -3,6 +3,7 @@ import { Switch, Route, Link } from "react-router-dom";
 import axiosInstance from "./../../../axios/axiosAPI";
 import Workshop_Menu from "./../../../helpers/menus/workshop_menu";
 import LineChart from "../../charts/linechart";
+import WorkshopTable from "../../table/workshop_table"
 
 /*function getRandomDateArray(numItems) {
     // Create random array of objects (with date)
