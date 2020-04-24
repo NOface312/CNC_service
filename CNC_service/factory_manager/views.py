@@ -5,6 +5,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import *
 from .serializers import *
+from random import randint
+import time
 # Create your views here.
 
 
@@ -116,6 +118,10 @@ class CNC_API_LIST(APIView):
 
     def get(self, request):
         cnc = CNC.objects.all()
+        for cn in cnc:
+            temp = randint(0, 100)
+            cn.congestion = temp
+            cn.date = round(time.time())
         serializer = CNCSerializer(cnc, many=True)
         return Response(serializer.data)
 

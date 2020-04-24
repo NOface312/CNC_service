@@ -31,7 +31,7 @@ class CNCSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CNC
-        fields = ('name', 'area', 'status', 'pk')
+        fields = ('name', 'area', 'status', 'pk', 'congestion', 'date')
 
     def create(self, validated_data):
         return CNC.objects.create(**validated_data)
