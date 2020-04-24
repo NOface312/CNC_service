@@ -1,16 +1,15 @@
 import axios from 'axios'
 
-const axiosInstance = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/auth/',
+const Repair_Services = axios.create({
+    baseURL: 'http://127.0.0.1:8000/api/f_man/',
     timeout: 5000,
     headers: {
-        'Authorization': localStorage.getItem('access_token') ? "JWT " + localStorage.getItem('access_token') : null,
         'Content-Type': 'application/json',
         'accept': 'application/json'
     }
 });
 
-axiosInstance.interceptors.response.use(
+Repair_Services.interceptors.response.use(
     response => response,
     error => {
         const originalRequest = error.config;
@@ -19,17 +18,17 @@ axiosInstance.interceptors.response.use(
         if (localStorage.getItem('refresh_token') && error.response.status === 401 && error.response.statusText === "Unauthorized") {
             const refresh_token = localStorage.getItem('refresh_token');
 
-            return axiosInstance
+            return Repair_Services
                 .post('/token/refresh/', { refresh: refresh_token })
                 .then((response) => {
 
                     localStorage.setItem('access_token', response.data.access);
                     localStorage.setItem('refresh_token', response.data.refresh);
 
-                    axiosInstance.defaults.headers['Authorization'] = "JWT " + response.data.access;
+                    Repair_Services.defaults.headers['Authorization'] = "JWT " + response.data.access;
                     originalRequest.headers['Authorization'] = "JWT " + response.data.access;
 
-                    return axiosInstance(originalRequest);
+                    return Repair_Services(originalRequest);
                 })
                 .catch(err => {
                     console.log(err)
@@ -40,4 +39,4 @@ axiosInstance.interceptors.response.use(
     }
 );
 
-export default axiosInstance
+export default Repair_Services

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
-import Factory_Manager_Workshop_Services from "./../../services/factory_manager/factory_manager_workshop_services";
+import Factory_Manager_Services from "../../services/factory_manager/factory_manager_services";
 import axios from 'axios';
 
 class API_Test extends Component {
@@ -21,7 +21,7 @@ class API_Test extends Component {
     
     async getallworkshop() {
         try {
-            let response = await Factory_Manager_Workshop_Services.get('/workshop/');
+            let response = await Factory_Manager_Services.get('/workshop/');
             console.log(response.data);
         } catch (error) {
             console.log("Hello error: ", JSON.stringify(error, null, 4));
@@ -32,7 +32,7 @@ class API_Test extends Component {
     async getworkshop(event) {
         event.preventDefault();
         try {
-            const response = await Factory_Manager_Workshop_Services.get('/workshop/' + this.state.pk);
+            const response = await Factory_Manager_Services.get('/workshop/' + this.state.pk);
             console.log(response.data);
             return response;
         } catch (error) {
@@ -43,7 +43,7 @@ class API_Test extends Component {
     async createworkshop(event) {
         event.preventDefault();
         try {
-            const response = await Factory_Manager_Workshop_Services.post('/workshop/', {
+            const response = await Factory_Manager_Services.post('/workshop/', {
                 name: this.state.name,
             });
             console.log(response.data);
@@ -56,7 +56,7 @@ class API_Test extends Component {
     async deleteworkshop(event) {
         event.preventDefault();
         try {
-            const response = await Factory_Manager_Workshop_Services.delete('/workshop/' + this.state.pk);
+            const response = await Factory_Manager_Services.delete('/workshop/' + this.state.pk);
             console.log(response.data);
             return response;
         } catch (error) {
@@ -67,7 +67,7 @@ class API_Test extends Component {
     async updateworkshop(event) {
         event.preventDefault();
         try {
-            const response = await Factory_Manager_Workshop_Services.put('/workshop/' + this.state.pk + '/', {
+            const response = await Factory_Manager_Services.put('/workshop/' + this.state.pk + '/', {
                 name: this.state.name,
             });
             console.log(response.data);

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const Factory_Manager_Workshop_Services = axios.create({
+const Area_Services = axios.create({
     baseURL: 'http://127.0.0.1:8000/api/f_man/',
     timeout: 5000,
     headers: {
@@ -9,7 +9,7 @@ const Factory_Manager_Workshop_Services = axios.create({
     }
 });
 
-Factory_Manager_Workshop_Services.interceptors.response.use(
+Area_Services.interceptors.response.use(
     response => response,
     error => {
         const originalRequest = error.config;
@@ -18,17 +18,17 @@ Factory_Manager_Workshop_Services.interceptors.response.use(
         if (localStorage.getItem('refresh_token') && error.response.status === 401 && error.response.statusText === "Unauthorized") {
             const refresh_token = localStorage.getItem('refresh_token');
 
-            return Factory_Manager_Workshop_Services
+            return Area_Services
                 .post('/token/refresh/', { refresh: refresh_token })
                 .then((response) => {
 
                     localStorage.setItem('access_token', response.data.access);
                     localStorage.setItem('refresh_token', response.data.refresh);
 
-                    Factory_Manager_Workshop_Services.defaults.headers['Authorization'] = "JWT " + response.data.access;
+                    Area_Services.defaults.headers['Authorization'] = "JWT " + response.data.access;
                     originalRequest.headers['Authorization'] = "JWT " + response.data.access;
 
-                    return Factory_Manager_Workshop_Services(originalRequest);
+                    return Area_Services(originalRequest);
                 })
                 .catch(err => {
                     console.log(err)
@@ -39,4 +39,4 @@ Factory_Manager_Workshop_Services.interceptors.response.use(
     }
 );
 
-export default Factory_Manager_Workshop_Services
+export default Area_Services
