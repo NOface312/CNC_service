@@ -127,9 +127,19 @@ class CNC_API_LIST(APIView):
 
     def post(self, request, format='json'):
         data = request.data
+        try:
+            area = Area.objects.get(name=request.data['area'])
+            workshop = Workshop.objects.get(name=request.data['workshop'])
+        except:
+            return Response("errors", status=status.HTTP_400_BAD_REQUEST)
+        data['area'] = ""
+        data['workshop'] = ""
         serializer = CNCSerializer(data=data)
         if serializer.is_valid():
             cnc = serializer.save()
+            cnc.area = area
+            cnc.workshop = workshop
+            cnc.save()
             json = serializer.data
             return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -34,8 +34,8 @@ class Workshop_Menu extends React.Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="/workshop/home/">Главная</Nav.Link>
-                        <Nav.Link href="/workshop/cnc_manager/">Документы/Приказы</Nav.Link>
-                        <Nav.Link href="/workshop/documents/">Менеджер станков</Nav.Link>
+                        <Nav.Link href="/workshop/cnc_manager/">Менеджер станков</Nav.Link>
+                        <Nav.Link href="/workshop/documents/">Документы/Приказы</Nav.Link>
                     </Nav>
                     <Form inline>
                         <Button variant="outline-success" onClick={this.handleLogout}>Выйти</Button>

@@ -2,80 +2,59 @@ import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import axiosInstance from "./../../../axios/axiosAPI";
 import Workshop_Menu from "./../../../helpers/menus/workshop_menu";
-import WorkshopTable from "../../table/boss_workshop/CNCTable"
-import LineChart from "../../charts/linechart"
-
-function getRandomDateArray(numItems) {
-    // Create random array of objects (with date)
-    let data = [];
-    let baseTime = new Date('2020-05-01T00:00:00').getTime();
-    let dayMs = 24 * 60 * 60 * 1000;
-    for(var i = 0; i < numItems; i++) {
-      data.push({
-        time: new Date(baseTime + i * dayMs),
-        value: Math.round(2 + 8 * Math.random())
-      });
-    }
-    return data;
-  }
-  
-  function getData(value) {
-    let data = [];
-    for (var i = 0; i < value; i++){
-        data.push({
-            title: "Неполадки " + i + " станка",
-            data: getRandomDateArray(50)
-        });
-    }
-    return data;
-  }
+import CNCTable from "./../../table/boss_workshop/CNCTable";
+import Factory_Manager_Services from './../../../services/factory_manager/factory_manager_services';
+import Create_CNC_Modal from './../../../helpers/modals/cnc_manager/create_cnc_modal';
+import jwt_decode from 'jwt-decode';
 
 class Boss_Workshop_CNC_Manager extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: getData()
-          };
-        this.number = 5;
+            cnc: [],
+        };
+        this.getallcnc = this.getallcnc.bind(this);
     }
-    componentDidMount() {
-        window.setInterval(() => {
-          this.setState({
-            data: getData(this.number)
-          })
-        }, 5000)
-    }
-    onClickCreate(){
-        this.number = this.number + 1;
-    }
-    render() {
-        let charts = []
 
-        this.state['data'].forEach(data => {
-            charts.push(
-                <div className="main chart-wrapper">
-                    <LineChart
-                        data={data.data}
-                        title={data.title}
-                        color="#3E517A"
-                    />
-                </div>
-            )
-        })
+    async getallcnc() {
+        try {
+            const token = localStorage.getItem("access_token");
+            var decoded = jwt_decode(token);
+            var workshop = decoded.workshop;
+            let response = await Factory_Manager_Services.get('/cnc/');
+            console.log(response.data);
+            let filter_data = [];
+            for (let index = 0; index < response.data.length; index++) {
+                if (response.data[index].workshop == workshop) {
+                    filter_data.push(response.data[index]);
+                }
+            }
+            this.setState({
+                cnc: filter_data,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    componentDidMount() {
+        // It's not the most straightforward thing to run an async method in componentDidMount
+
+        // Version 1 - no async: Console.log will output something undefined.
+        this.getallcnc();
+    }
+
+
+    render() {
 
         return (
             <div>
                 <Workshop_Menu />
                 Начальник цеха
                 Управление станками
-                <div><button type="button" onClick={() => 
-                       this.onClickCreate()}
-                    >
-                    Создать станок
-                </button></div>
-                <div className="Charts">
-                    {charts}
-                </div>
+                <Create_CNC_Modal />
+                <CNCTable data={this.state.cnc} />
             </div>
         )
     }

@@ -13,6 +13,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Add custom claims
         # Здесь забацую расшифровку и помещение должности в токен все изи
         token['position'] = user.position
+        print(str(user.workshop))
+        token['workshop'] = str(user.workshop)
+        token['area'] = str(user.area)
         return token
 
 

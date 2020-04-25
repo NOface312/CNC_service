@@ -28,10 +28,11 @@ class AreaSerializer(serializers.ModelSerializer):
 class CNCSerializer(serializers.ModelSerializer):
     name = serializers.CharField(min_length=2, required=True)
     area = serializers.StringRelatedField()
+    workshop = serializers.StringRelatedField()
 
     class Meta:
         model = CNC
-        fields = ('name', 'area', 'status', 'pk', 'congestion', 'date')
+        fields = ('name', 'area', 'status', 'pk', 'congestion', 'date', 'workshop')
 
     def create(self, validated_data):
         return CNC.objects.create(**validated_data)

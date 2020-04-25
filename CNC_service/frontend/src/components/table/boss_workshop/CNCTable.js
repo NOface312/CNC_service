@@ -5,7 +5,7 @@ import "../../../../../../node_modules/react-bootstrap-table/css/react-bootstrap
 import "../css/Table.css"
 
 
-class WorkshopTable extends Component {
+class CNCTable extends Component {
     onClickChange(cell, row, rowIndex){
      console.log('change Product #', rowIndex);
     }
@@ -40,7 +40,7 @@ class WorkshopTable extends Component {
    render() {
      return (
       <BootstrapTable data={this.props.data}>
-       <TableHeaderColumn dataField='number' isKey>
+       <TableHeaderColumn dataField='pk' isKey>
           Номер
         </TableHeaderColumn>
         <TableHeaderColumn dataField='name'>
@@ -63,4 +63,4 @@ class WorkshopTable extends Component {
   }
   
 
-  export default WorkshopTable;
+export default CNCTable;
