@@ -5,12 +5,9 @@ import "../../../../../../node_modules/react-bootstrap-table/css/react-bootstrap
 import "../css/Table.css"
 
 
-class DocumentTable extends Component {
+class MainTable extends Component {
     onClickChange(cell, row, rowIndex){
-     console.log('change Product #', rowIndex);
-    }
-    onClickDelete(cell, row, rowIndex){
-        console.log('delete Product #', rowIndex);
+        alert("Делать будешь ты")
     }
 
     changeButton(cell, row, enumObject, rowIndex) {
@@ -20,22 +17,11 @@ class DocumentTable extends Component {
             onClick={() => 
             this.onClickChange(cell, row, rowIndex)}
          >
-         Изменить
+         Назначить
          </button>
       )
    }
 
-   deleteButton(cell, row, enumObject, rowIndex) {
-    return (
-       <button 
-          type="button" 
-          onClick={() => 
-          this.onClickDelete(cell, row, rowIndex)}
-       >
-       Удалить
-       </button>
-    )
- }
   
    render() {
      return (
@@ -43,23 +29,24 @@ class DocumentTable extends Component {
        <TableHeaderColumn dataField='number' isKey className="head">
           Номер
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='date' className="head">
+        <TableHeaderColumn dataField='area' className="head">
+          Участок
+        </TableHeaderColumn>
+        <TableHeaderColumn dataField='boss_workshop' className="head">
+          Начальник Цеха
+        </TableHeaderColumn>
+        <TableHeaderColumn dataField='date_request' className="head">
           Дата
         </TableHeaderColumn>
         <TableHeaderColumn dataField='comment' className="head">
           Текст
-        </TableHeaderColumn>
+        </TableHeaderColumn>        
         <TableHeaderColumn dataField='status' className="head">
           Статус
-        </TableHeaderColumn>
+        </TableHeaderColumn>  
         <TableHeaderColumn
           dataField='button'
           dataFormat={this.changeButton.bind(this)}
-          className="head"
-        />
-        <TableHeaderColumn
-          dataField='button'
-          dataFormat={this.deleteButton.bind(this)}
           className="head"
         />
      </BootstrapTable>
@@ -68,4 +55,4 @@ class DocumentTable extends Component {
   }
   
 
-  export default DocumentTable;
+  export default MainTable;

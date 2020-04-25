@@ -51,8 +51,6 @@ class Boss_Workshop_CNC_Manager extends Component {
         return (
             <div>
                 <Workshop_Menu />
-                Начальник цеха
-                Управление станками
                 <Create_CNC_Modal />
                 <CNCTable data={this.state.cnc} />
             </div>

@@ -5,9 +5,13 @@ import "../../../../../../node_modules/react-bootstrap-table/css/react-bootstrap
 import "../css/Table.css"
 
 
-class SlaveTable extends Component {
+class FormTable extends Component {
     onClickChange(cell, row, rowIndex){
         alert("Делать будешь ты")
+    }
+
+    onClickDelete(cell, row, rowIndex){
+        alert("АААА")
     }
 
     changeButton(cell, row, enumObject, rowIndex) {
@@ -22,34 +26,52 @@ class SlaveTable extends Component {
       )
    }
 
+   deleteButton(cell, row, enumObject, rowIndex) {
+    return (
+       <button 
+          type="button" 
+          onClick={() => 
+          this.onClickDelete(cell, row, rowIndex)}
+       >
+       Назначить
+       </button>
+    )
+ }
+
   
    render() {
      return (
-      <BootstrapTable data={this.props.data}>
-       <TableHeaderColumn dataField='number' isKey>
+      <BootstrapTable data={this.props.data} className="table">
+       <TableHeaderColumn dataField='number' isKey className="head">
           Номер
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='date_request'>
+        <TableHeaderColumn dataField='boss_repair' className="head">
+          Босс ремонтер
+        </TableHeaderColumn>
+        <TableHeaderColumn dataField='worker' className="head">
+          Рабочий
+        </TableHeaderColumn>
+        <TableHeaderColumn dataField='status' className="head">
+          Статус
+        </TableHeaderColumn>
+        <TableHeaderColumn dataField='comment' className="head">
+          Текст
+        </TableHeaderColumn>        
+        <TableHeaderColumn dataField='date_request' className="head">
           Дата
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='boss_area'>
-          Начальник
-        </TableHeaderColumn>
-        <TableHeaderColumn dataField='comment'>
-          Текст
-        </TableHeaderColumn>
-        <TableHeaderColumn dataField='CNC'>
+        <TableHeaderColumn dataField='cnc' className="head">
           Станок
-        </TableHeaderColumn>        
-        <TableHeaderColumn dataField='type_request'>
-          Тип запроса
-        </TableHeaderColumn>
-        <TableHeaderColumn dataField='status'>
-          Статус
         </TableHeaderColumn>
         <TableHeaderColumn
           dataField='button'
           dataFormat={this.changeButton.bind(this)}
+          className="head"
+        />
+        <TableHeaderColumn
+          dataField='button'
+          dataFormat={this.deleteButton.bind(this)}
+          className="head"
         />
      </BootstrapTable>
     )
@@ -57,4 +79,4 @@ class SlaveTable extends Component {
   }
   
 
-  export default SlaveTable;
+  export default FormTable;

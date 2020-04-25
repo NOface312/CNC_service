@@ -21,7 +21,6 @@ class Slave_Main extends Component {
         return (
             <div>
                 <Slave_Menu/>
-                Работник
                 <SlaveTable data = {data}/>
             </div>
         )

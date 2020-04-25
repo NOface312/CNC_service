@@ -25,10 +25,7 @@ class Boss_Workshop_Page_With_Forms extends Component {
     render() {
         return (
             <div>
-                <Workshop_Menu />
-                Начальник цеха
-                Главная
-                Здесь будет список отправленных документов. Предоставим возможность отслеживания форм и удаления их.<br/>
+                <Workshop_Menu /><br/>
                 <div><button type="button" onClick={() => 
                        this.onClickCreate()}
                     >

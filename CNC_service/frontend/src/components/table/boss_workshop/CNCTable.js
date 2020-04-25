@@ -39,23 +39,25 @@ class CNCTable extends Component {
   
    render() {
      return (
-      <BootstrapTable data={this.props.data}>
-       <TableHeaderColumn dataField='pk' isKey>
+      <BootstrapTable data={this.props.data} className="table">
+       <TableHeaderColumn dataField='pk' isKey className="head">
           Номер
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='name'>
+        <TableHeaderColumn dataField='name' className="head">
           Имя
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='area'>
+        <TableHeaderColumn dataField='area' className="head">
           Участок
         </TableHeaderColumn>
         <TableHeaderColumn
           dataField='button'
           dataFormat={this.changeButton.bind(this)}
+          className="head"
         />
         <TableHeaderColumn
           dataField='button'
           dataFormat={this.deleteButton.bind(this)}
+          className="head"
         />
      </BootstrapTable>
     )

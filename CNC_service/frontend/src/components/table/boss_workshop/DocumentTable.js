@@ -40,32 +40,34 @@ class DocumentTable extends Component {
   
    render() {
      return (
-      <BootstrapTable data={this.props.data}>
-       <TableHeaderColumn dataField='number' isKey>
+      <BootstrapTable data={this.props.data} className="table">
+       <TableHeaderColumn dataField='number' isKey className="head">
           Номер
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='area'>
+        <TableHeaderColumn dataField='area' className="head">
           Участок
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='boss_area'>
+        <TableHeaderColumn dataField='boss_area' className="head">
           Кому
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='date'>
+        <TableHeaderColumn dataField='date' className="head">
           Дата
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='comment'>
+        <TableHeaderColumn dataField='comment' className="head">
           Текст
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='status'>
+        <TableHeaderColumn dataField='status' className="head">
           Статус
         </TableHeaderColumn>
         <TableHeaderColumn
           dataField='button'
           dataFormat={this.changeButton.bind(this)}
+          className="head"
         />
         <TableHeaderColumn
           dataField='button'
           dataFormat={this.deleteButton.bind(this)}
+          className="head"
         />
      </BootstrapTable>
     )
