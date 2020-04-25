@@ -2,16 +2,15 @@ import React, { Component } from "react";
 import {BootstrapTable, TableHeaderColumn} 
         from 'react-bootstrap-table'
 import "../../../../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css"
-import "../slave/css/SlaveTable.css"
+import "../css/Table.css"
+import Create_CNC_Modal from "../../../helpers/modals/cnc_manager/create_cnc_modal"
 
 
 class SlaveTable extends Component {
     onClickChange(cell, row, rowIndex){
-        if(buttonName == "status 1"){
-            buttonName = "status 2";
-        } else{
-            buttonName = "status 1";
-        }
+        return (
+          <Create_CNC_Modal />
+        )
     }
 
     changeButton(cell, row, enumObject, rowIndex) {
@@ -20,6 +19,7 @@ class SlaveTable extends Component {
             type="button" 
             onClick={() => 
             this.onClickChange(cell, row, rowIndex)}
+            className="button"
          >
          {this.props.data[rowIndex]['status']}
          </button>
@@ -29,29 +29,29 @@ class SlaveTable extends Component {
   
    render() {
      return (
-      <BootstrapTable data={this.props.data}>
-       <TableHeaderColumn dataField='number' isKey className="num">
+      <BootstrapTable data={this.props.data} className="table">
+       <TableHeaderColumn dataField='number' isKey className="head">
           Номер
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='date_request' className="date">
+        <TableHeaderColumn dataField='date_request' className="head">
           Дата
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='boss_repair' className="boss">
+        <TableHeaderColumn dataField='boss_repair' className="head">
           Начальник
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='comment' className="text">
+        <TableHeaderColumn dataField='comment' className="head">
           Текст
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='CNC' className="CNC">
+        <TableHeaderColumn dataField='CNC' className="head">
           Станок
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='status' className="status">
+        <TableHeaderColumn dataField='status' className="head">
           Статус
         </TableHeaderColumn>
         <TableHeaderColumn
           dataField='button'
           dataFormat={this.changeButton.bind(this)}
-          className="button"
+          className="head"
         />
      </BootstrapTable>
     )
