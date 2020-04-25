@@ -33,7 +33,7 @@ class Slave_Menu extends React.Component {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/slave/home/">Главная</Nav.Link>
+                        <Nav.Link href="/worker/home/">Главная</Nav.Link>
                     </Nav>
                     <Form inline>
                         <Button variant="outline-success" onClick={this.handleLogout}>Выйти</Button>
