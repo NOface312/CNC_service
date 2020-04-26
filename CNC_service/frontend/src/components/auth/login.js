@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import axiosInstance from "./../../axios/axiosApi";
 import { Redirect, Route, Link } from "react-router-dom";
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import "./css/login.css";
 
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = { username: "", password: ""};
+        this.state = { username: "", password: "", modal:false};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClose = this.handleClose.bind(this);
         this.handleSubmitWThen = this.handleSubmitWThen.bind(this);
     }
 
@@ -46,13 +49,37 @@ class Login extends Component {
             this.props.history.push("/");
             return response;
         } catch (error) {
+            this.setState({modal:true})
             throw error;
         }
     }
 
+    handleClose(){
+        this.setState({modal:false})
+    }
+
     render() {
+        let modal = []
+        modal.push(
+            <>
+            <Modal show={this.state.modal} onHide={this.handleClose} className="text-dark">
+                <Modal.Header closeButton>
+                    <Modal.Title>Ошибка!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Произошла ошибка при авторизации, проверьте введенные данные и повторите снова.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={this.handleClose}>
+                        Закрыть
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            </>
+        )
         return (
             <div className="simple-login-container">
+                {modal}
                 <form className="form" onSubmit={this.handleSubmit}>
                     <h2>Войти</h2>
                     <div className="row">
@@ -67,7 +94,7 @@ class Login extends Component {
                     </div>
                     <div className="row">
                         <div className="col-md-12 form-group">
-                            <input type="submit" className="btn btn-block btn-login"/>
+                            <input type="submit" className="btn btn-block btn-login" value="Войти"/>
                         </div>
                     </div>
                     <div className="row">

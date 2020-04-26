@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axiosInstance from "./../../axios/axiosApi";
 import { Link } from "react-router-dom";
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 class Signup extends Component {
     constructor(props) {
@@ -12,11 +14,13 @@ class Signup extends Component {
             name: "",
             surname: "",
             second_name: "",
-            errors: {}
+            errors: {},
+            modal: false
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     handleChange(event) {
@@ -37,16 +41,39 @@ class Signup extends Component {
             this.props.history.push("/login/");
             return response;
         } catch (error) {
-            console.log(error.stack);
             this.setState({
-                errors: error.response.data
+                errors: error.response.data,
+                modal: true
             });
         }
     }
 
+    handleClose(){
+        this.setState({modal:false})
+    }
+
     render() {
+        let modal = []
+        modal.push(
+            <>
+            <Modal show={this.state.modal} onHide={this.handleClose} className="text-dark">
+                <Modal.Header closeButton>
+                    <Modal.Title>Ошибка!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Произошла ошибка при регистрации, проверьте введенные данные и повторите снова.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={this.handleClose}>
+                        Закрыть
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            </>
+        )
         return (
             <div className="simple-login-container">
+                {modal}
                 <form className="form" onSubmit={this.handleSubmit}>
                     <h2>Регистрация</h2>
                     <div className="row">
@@ -86,7 +113,7 @@ class Signup extends Component {
                     </div>
                     <div className="row">
                         <div className="col-md-12 form-group">
-                            <input type="submit" className="btn btn-block btn-login" />
+                            <input type="submit" className="btn btn-block btn-login" value="Зарегистрироваться"/>
                         </div>
                     </div>
                     <div className="row">

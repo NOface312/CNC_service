@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import jwt_decode from 'jwt-decode';
+import "../../css/Modal.css"
 
 class Create_CNC_Modal extends React.Component {
     constructor(props, context) {
@@ -83,7 +84,7 @@ class Create_CNC_Modal extends React.Component {
     render() {
         return (
             <>
-                <button type="button" onClick={this.handleShow}>
+                <button type="button" onClick={this.handleShow} className="button">
                     Создать станок
                 </button>
                 <Modal show={this.state.show} onHide={this.handleClose} className="text-dark">
