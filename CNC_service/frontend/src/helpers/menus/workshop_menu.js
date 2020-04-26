@@ -29,7 +29,7 @@ class Workshop_Menu extends React.Component {
     render() {
         return (
             <Navbar expand="lg" variant="dark" bg="dark">
-                <Navbar.Brand href="#home">CNC_Serves</Navbar.Brand>
+                <Navbar.Brand href="#home">CNC_Service</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
