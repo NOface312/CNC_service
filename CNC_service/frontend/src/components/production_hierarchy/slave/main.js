@@ -2,26 +2,49 @@ import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import axiosInstance from "./../../../axios/axiosAPI";
 import Slave_Menu from "./../../../helpers/menus/slave_menu";
-import SlaveTable from "../../table/slave/SlaveTable"
-
-var data = [
-    {number: "1", date_request: "01.01.2020", boss_repair: "boss 1", comment: "comment 1", CNC: "CNC 1", status: "status 1"},
-    {number: "2", date_request: "02.01.2020", boss_repair: "boss 2", comment: "comment 2", CNC: "CNC 2", status: "status 2"},
-    {number: "3", date_request: "03.01.2020", boss_repair: "boss 3", comment: "comment 3", CNC: "CNC 3", status: "status 3"},
-    {number: "4", date_request: "04.01.2020", boss_repair: "boss 4", comment: "comment 4", CNC: "CNC 4", status: "status 4"},
-]
+import SlaveTable from "../../table/slave/SlaveTable";
+import Repair_Services from '../../../services/repair/repair_services';
+import jwt_decode from 'jwt-decode';
 
 class Slave_Main extends Component {
     constructor(props) {
         super(props);
-        this.state;
+        this.state = {
+            requests: [],
+        };
+        this.getallrequests = this.getallrequests.bind(this);
+    }
+
+    async getallrequests() {
+        try {
+            const token = localStorage.getItem("access_token");
+            var decoded = jwt_decode(token);
+            var FIO = decoded.fio;
+            let response = await Repair_Services.get('/for_repair/');
+            let filter_data = [];
+            console.log(response.data)
+            for (let index = 0; index < response.data.length; index++) {
+                if (response.data[index].worker == FIO) {
+                    filter_data.push(response.data[index]);
+                }
+            }
+            this.setState({
+                requests: filter_data,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    componentDidMount() {
+        this.getallrequests();
     }
 
     render() {
         return (
             <div>
                 <Slave_Menu/>
-                <SlaveTable data = {data}/>
+                <SlaveTable data={this.state.requests}/>
             </div>
         )
     }

@@ -13,6 +13,7 @@ class CustomUser(AbstractUser):
     name = models.CharField(blank=True, max_length=120)
     surname = models.CharField(blank=True, max_length=120)
     second_name = models.CharField(blank=True, max_length=120)
+    FIO = models.CharField(blank=True, max_length=120)
     position = models.CharField(
         max_length=30, choices=POSITION_CHOICES, blank=True, null=True)
     phone = models.CharField(blank=True, max_length=120)
@@ -20,3 +21,7 @@ class CustomUser(AbstractUser):
 
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True)
     area = models.ForeignKey(Area, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        title = self.FIO
+        return title

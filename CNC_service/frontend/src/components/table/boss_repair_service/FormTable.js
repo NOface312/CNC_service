@@ -3,38 +3,20 @@ import {BootstrapTable, TableHeaderColumn}
         from 'react-bootstrap-table'
 import "../../../../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css"
 import "../css/Table.css"
+import Delete_Form_Modal from './../../../helpers/modals/repair/page_with_forms/delete_form_modal';
+import Change_Form_Modal from './../../../helpers/modals/repair/page_with_forms/change_form_modal';
 
 
 class FormTable extends Component {
-    onClickChange(cell, row, rowIndex){
-        alert("Делать будешь ты")
-    }
-
-    onClickDelete(cell, row, rowIndex){
-        alert("АААА")
-    }
-
     changeButton(cell, row, enumObject, rowIndex) {
       return (
-         <button 
-            type="button" 
-            onClick={() => 
-            this.onClickChange(cell, row, rowIndex)}
-         >
-         Назначить
-         </button>
+         <Change_Form_Modal data={this.props.data[rowIndex]['pk']} />
       )
    }
 
    deleteButton(cell, row, enumObject, rowIndex) {
     return (
-       <button 
-          type="button" 
-          onClick={() => 
-          this.onClickDelete(cell, row, rowIndex)}
-       >
-       Назначить
-       </button>
+       <Delete_Form_Modal data={this.props.data[rowIndex]['pk']} />
     )
  }
 
@@ -42,11 +24,11 @@ class FormTable extends Component {
    render() {
      return (
       <BootstrapTable data={this.props.data} className="table">
-       <TableHeaderColumn dataField='number' isKey className="head">
+       <TableHeaderColumn dataField='pk' isKey className="head">
           Номер
         </TableHeaderColumn>
         <TableHeaderColumn dataField='boss_repair' className="head">
-          Босс ремонтер
+          Начальник ремотного участка
         </TableHeaderColumn>
         <TableHeaderColumn dataField='worker' className="head">
           Рабочий

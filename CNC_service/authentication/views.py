@@ -55,6 +55,7 @@ class CustomUserCreate(APIView):
             area = Area.objects.get(name=stuff.area)
             true_user.workshop = workshop
             true_user.area = area
+            true_user.FIO = FIO
             true_user.save()
             if user:
                 json = serializer.data
@@ -108,3 +109,29 @@ class LogoutAndBlacklistRefreshTokenForUserView(APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class User_API_LIST(APIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = ()
+
+    def get(self, request):
+        user = CustomUser.objects.all()
+        serializer = CustomUserSerializer(user, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class User_API_DETAIL(APIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = ()
+
+    def get_object(self, pk):
+        try:
+            return CustomUser.objects.get(pk=pk)
+        except CustomUser.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format='json'):
+        user = self.get_object(pk)
+        serializer = CustomUserSerializer(user)
+        return Response(serializer.data)

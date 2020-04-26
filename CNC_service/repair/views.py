@@ -5,7 +5,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import *
 from .serializers import *
-
+from authentication.models import CustomUser
+from factory_manager.models import CNC
 
 class Request_For_Repair_API_LIST(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -19,9 +20,23 @@ class Request_For_Repair_API_LIST(APIView):
 
     def post(self, request, format='json'):
         data = request.data
+        try:
+            boss_repair = CustomUser.objects.get(
+                FIO=request.data['boss_repair'])
+            worker = CustomUser.objects.get(FIO=request.data['worker'])
+            cnc = CNC.objects.get(name=request.data['cnc'])
+        except:
+            return Response("errors", status=status.HTTP_400_BAD_REQUEST)
+        data['boss_repair'] = ""
+        data['worker'] = ""
+        data['cnc'] = ""
         serializer = Request_For_RepairSerializer(data=data)
         if serializer.is_valid():
             for_repair = serializer.save()
+            for_repair.boss_repair = boss_repair
+            for_repair.worker = worker
+            for_repair.cnc = cnc
+            for_repair.save()
             json = serializer.data
             return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -44,10 +59,25 @@ class Request_For_Repair_API_DETAIL(APIView):
 
     def put(self, request, pk, format=None):
         for_repair = self.get_object(pk)
+        data = request.data
+        try:
+            boss_repair = CustomUser.objects.get(
+                FIO=request.data['boss_repair'])
+            worker = CustomUser.objects.get(FIO=request.data['worker'])
+            cnc = CNC.objects.get(name=request.data['cnc'])
+        except:
+            return Response("errors", status=status.HTTP_400_BAD_REQUEST)
+        data['boss_repair'] = ""
+        data['worker'] = ""
+        data['cnc'] = ""
         serializer = Request_For_RepairSerializer(
             for_repair, data=request.data)
         if serializer.is_valid():
             serializer.save()
+            for_repair.boss_repair = boss_repair
+            for_repair.worker = worker
+            for_repair.cnc = cnc
+            for_repair.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

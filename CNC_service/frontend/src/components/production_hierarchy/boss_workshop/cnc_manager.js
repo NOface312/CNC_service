@@ -4,7 +4,7 @@ import axiosInstance from "./../../../axios/axiosAPI";
 import Workshop_Menu from "./../../../helpers/menus/workshop_menu";
 import CNCTable from "./../../table/boss_workshop/CNCTable";
 import Factory_Manager_Services from './../../../services/factory_manager/factory_manager_services';
-import Create_CNC_Modal from './../../../helpers/modals/cnc_manager/create_cnc_modal';
+import Create_CNC_Modal from './../../../helpers/modals/workshop/cnc_manager/create_cnc_modal';
 import jwt_decode from 'jwt-decode';
 
 class Boss_Workshop_CNC_Manager extends Component {
@@ -39,9 +39,6 @@ class Boss_Workshop_CNC_Manager extends Component {
 
 
     componentDidMount() {
-        // It's not the most straightforward thing to run an async method in componentDidMount
-
-        // Version 1 - no async: Console.log will output something undefined.
         this.getallcnc();
     }
 

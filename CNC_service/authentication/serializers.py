@@ -16,6 +16,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         print(str(user.workshop))
         token['workshop'] = str(user.workshop)
         token['area'] = str(user.area)
+        token['fio'] = str(user.FIO)
         return token
 
 
@@ -40,11 +41,13 @@ class CustomUserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(
         min_length=8, required=True)
+    workshop = serializers.StringRelatedField()
+    area = serializers.StringRelatedField()
 
     class Meta:
         model = CustomUser
         fields = ('email', 'username', 'password', 'id', 'name',
-                  'surname', 'second_name', 'position', 'phone')
+                  'surname', 'second_name', 'position', 'phone', 'area', 'workshop', 'FIO')
         #extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):

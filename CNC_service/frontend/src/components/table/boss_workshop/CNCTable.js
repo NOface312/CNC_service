@@ -2,40 +2,24 @@ import React, { Component } from "react";
 import {BootstrapTable, TableHeaderColumn} 
         from 'react-bootstrap-table'
 import "../../../../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css"
-import "../css/Table.css"
+import "../css/Table.css";
+import Delete_CNC_Modal from './../../../helpers/modals/workshop/cnc_manager/delete_cnc_modal';
+import Change_CNC_Modal from './../../../helpers/modals/workshop/cnc_manager/change_cnc_modal';
 
 
 class CNCTable extends Component {
-    onClickChange(cell, row, rowIndex){
-     console.log('change Product #', rowIndex);
-    }
-    onClickDelete(cell, row, rowIndex){
-        console.log('delete Product #', rowIndex);
-    }
 
     changeButton(cell, row, enumObject, rowIndex) {
       return (
-         <button 
-            type="button" 
-            onClick={() => 
-            this.onClickChange(cell, row, rowIndex)}
-         >
-         Изменить
-         </button>
+        <Change_CNC_Modal data={this.props.data[rowIndex]['pk']} />
       )
-   }
+    }
 
-   deleteButton(cell, row, enumObject, rowIndex) {
-    return (
-       <button 
-          type="button" 
-          onClick={() => 
-          this.onClickDelete(cell, row, rowIndex)}
-       >
-       Удалить
-       </button>
-    )
- }
+    deleteButton(cell, row, enumObject, rowIndex) {
+      return (
+        <Delete_CNC_Modal data={this.props.data[rowIndex]['pk']} />
+      )
+    }
   
    render() {
      return (

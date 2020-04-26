@@ -3,54 +3,48 @@ import {BootstrapTable, TableHeaderColumn}
         from 'react-bootstrap-table'
 import "../../../../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css"
 import "../css/Table.css"
+import Delete_Form_Modal from './../../../helpers/modals/area/page_with_forms/delete_form_modal';
+import Change_Form_Modal from './../../../helpers/modals/area/page_with_forms/change_form_modal';
 
 
 class DocumentTable extends Component {
-    onClickChange(cell, row, rowIndex){
-     console.log('change Product #', rowIndex);
-    }
-    onClickDelete(cell, row, rowIndex){
-        console.log('delete Product #', rowIndex);
-    }
 
-    changeButton(cell, row, enumObject, rowIndex) {
-      return (
-         <button 
-            type="button" 
-            onClick={() => 
-            this.onClickChange(cell, row, rowIndex)}
-         >
-         Изменить
-         </button>
-      )
-   }
-
-   deleteButton(cell, row, enumObject, rowIndex) {
+  changeButton(cell, row, enumObject, rowIndex) {
     return (
-       <button 
-          type="button" 
-          onClick={() => 
-          this.onClickDelete(cell, row, rowIndex)}
-       >
-       Удалить
-       </button>
+      <Change_Form_Modal data={this.props.data[rowIndex]['pk']} />
     )
- }
+  }
+
+  deleteButton(cell, row, enumObject, rowIndex) {
+    return (
+      <Delete_Form_Modal data={this.props.data[rowIndex]['pk']} />
+    )
+  }
+
   
    render() {
      return (
       <BootstrapTable data={this.props.data} className="table">
-       <TableHeaderColumn dataField='number' isKey className="head">
+       <TableHeaderColumn dataField='pk' isKey className="head">
           Номер
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='date' className="head">
+        <TableHeaderColumn dataField='date_request' className="head">
           Дата
         </TableHeaderColumn>
         <TableHeaderColumn dataField='comment' className="head">
           Текст
         </TableHeaderColumn>
-        <TableHeaderColumn dataField='status' className="head">
-          Статус
+         <TableHeaderColumn dataField='boss_repair' className="head">
+           Кому
+        </TableHeaderColumn>
+         <TableHeaderColumn dataField='status' className="head">
+           Статус
+        </TableHeaderColumn>
+         <TableHeaderColumn dataField='type_request' className="head">
+           Тип
+        </TableHeaderColumn>
+         <TableHeaderColumn dataField='cnc' className="head">
+           Станок
         </TableHeaderColumn>
         <TableHeaderColumn
           dataField='button'

@@ -2,39 +2,52 @@ import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import axiosInstance from "./../../../axios/axiosAPI";
 import Workshop_Menu from "./../../../helpers/menus/workshop_menu";
-import DocumentTable from "../../table/boss_workshop/DocumentTable"
-
-var data = [
-    {number: "1", area: "area 1", boss_area: "boss 1", date: "01.01.2020", comment: "comment 1", status: "In work"},
-    {number: "2", area: "area 2", boss_area: "boss 2", date: "02.01.2020", comment: "comment 2", status: "Complete"},
-    {number: "3", area: "area 3", boss_area: "boss 3", date: "03.01.2020", comment: "comment 3", status: "Cannto do that"},
-    {number: "4", area: "area 4", boss_area: "boss 4", date: "04.01.2020", comment: "comment 4", status: "In work"},
-    {number: "5", area: "area 5", boss_area: "boss 5", date: "05.01.2020", comment: "comment 5", status: "In work"},
-]
+import DocumentTable from "../../table/boss_workshop/DocumentTable";
+import Workshop_Services from './../../../services/workshop/workshop_services';
+import Create_Form_Modal from '../../../helpers/modals/workshop/page_with_forms/create_form_modal';
+import jwt_decode from 'jwt-decode';
 
 class Boss_Workshop_Page_With_Forms extends Component {
     constructor(props) {
         super(props);
-        this.state;
+        this.state = {
+            requests: [],
+        };
+        this.getallrequests = this.getallrequests.bind(this);
     }
 
-    onClickCreate(){
-        alert("create")
+    async getallrequests() {
+        try {
+            const token = localStorage.getItem("access_token");
+            var decoded = jwt_decode(token);
+            var FIO = decoded.fio;
+            let response = await Workshop_Services.get('/for_trouble/');
+            let filter_data = [];
+            for (let index = 0; index < response.data.length; index++) {
+                if (response.data[index].boss_workshop == FIO) {
+                    filter_data.push(response.data[index]);
+                }
+            }
+            this.setState({
+                requests: filter_data,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    componentDidMount() {
+        this.getallrequests();
     }
     
     render() {
         return (
             <div>
                 <Workshop_Menu /><br/>
-                <div><button type="button" onClick={() => 
-                       this.onClickCreate()}
-                    >
-                    Создать запрос
-                </button></div>
-                <DocumentTable data={data}/> 
+                <Create_Form_Modal />
+                <DocumentTable data={this.state.requests} />
             </div>
         )
     }
 }
-
 export default Boss_Workshop_Page_With_Forms;

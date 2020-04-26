@@ -3,22 +3,14 @@ import {BootstrapTable, TableHeaderColumn}
         from 'react-bootstrap-table'
 import "../../../../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css"
 import "../css/Table.css"
+import Change_Form_Modal from './../../../helpers/modals/area/main/change_form_modal';
 
 
 class MainTable extends Component {
-    onClickChange(cell, row, rowIndex){
-        alert("Делать будешь ты")
-    }
 
     changeButton(cell, row, enumObject, rowIndex) {
       return (
-         <button 
-            type="button" 
-            onClick={() => 
-            this.onClickChange(cell, row, rowIndex)}
-         >
-         Назначить
-         </button>
+        <Change_Form_Modal data={this.props.data[rowIndex]['pk']} />
       )
    }
 
@@ -26,7 +18,7 @@ class MainTable extends Component {
    render() {
      return (
       <BootstrapTable data={this.props.data} className="table">
-       <TableHeaderColumn dataField='number' isKey className="head">
+       <TableHeaderColumn dataField='pk' isKey className="head">
           Номер
         </TableHeaderColumn>
         <TableHeaderColumn dataField='area' className="head">

@@ -52,7 +52,7 @@ class LineChart extends React.Component {
         }
       });
     }
-  
+    
     render() {
       return <canvas ref={this.canvasRef} />;
     }

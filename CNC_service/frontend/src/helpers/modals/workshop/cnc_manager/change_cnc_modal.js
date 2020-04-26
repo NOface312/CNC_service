@@ -1,30 +1,33 @@
 import React, { Component } from "react";
-import Factory_Manager_Services from '../../../services/factory_manager/factory_manager_services';
+import Factory_Manager_Services from '../../../../services/factory_manager/factory_manager_services';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import jwt_decode from 'jwt-decode';
 
-class Create_CNC_Modal extends React.Component {
+class Change_CNC_Modal extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
             show: false,
             area: [],
             workshop: "",
-            name: "", 
+            name: "",
             area_str: "",
         };
 
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
-        this.getallarea = this.getallarea.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.getallarea = this.getallarea.bind(this);
     }
 
     async getallarea() {
         try {
+            let response1 = await Factory_Manager_Services.get('/cnc/' + this.props.data);
+            this.state.name = response1.data.name;
+            this.state.area_str = response1.data.area;
             const token = localStorage.getItem("access_token");
             var decoded = jwt_decode(token);
             var workshop = decoded.workshop;
@@ -56,12 +59,16 @@ class Create_CNC_Modal extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         try {
-            const response = await Factory_Manager_Services.post('/cnc/', {
+            if (this.state.area_str == "") {
+                this.state.area_str = this.state.area[0].name;
+            }
+            const response = await Factory_Manager_Services.put('/cnc/' + this.props.data + '/', {
                 name: this.state.name,
                 area: this.state.area_str,
                 workshop: this.state.workshop
             });
             this.setState({ show: false });
+            location.reload();
             return response;
         } catch (error) {
             throw error;
@@ -69,7 +76,6 @@ class Create_CNC_Modal extends React.Component {
     }
 
     handleChange(event) {
-        console.log("faf");
         this.setState({ [event.target.name]: event.target.value });
     }
 
@@ -81,23 +87,22 @@ class Create_CNC_Modal extends React.Component {
         return (
             <>
                 <button type="button" onClick={this.handleShow}>
-                    Создать станок
+                    Изменить
                 </button>
                 <Modal show={this.state.show} onHide={this.handleClose} className="text-dark">
                     <Modal.Header closeButton>
-                        <Modal.Title>Добавить станок</Modal.Title>
+                        <Modal.Title>Изменить станок</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label>Название</Form.Label>
-                                <Form.Control name="name" type="text" placeholder="Введите название станка" value={this.state.name} onChange={this.handleChange}/>
+                                <Form.Control name="name" type="text" placeholder="Введите название станка" value={this.state.name} onChange={this.handleChange} />
                             </Form.Group>
                             <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Выберите участок</Form.Label>
-                                <Form.Control as="select" name="area_str"
-                                    value={this.state.area_str} onClick={this.handleChange}>
-                                    {this.state.area.map(are => <option> {are.name} </option>)}
+                                <Form.Control as="select" name="area_str" value={this.state.area_str} onChange={this.handleChange}>
+                                    {this.state.area.map(are => <option value={are.name}> {are.name} </option>)}
                                 </Form.Control>
                             </Form.Group>
                         </Form>
@@ -117,4 +122,4 @@ class Create_CNC_Modal extends React.Component {
 }
 
 
-export default Create_CNC_Modal;
+export default Change_CNC_Modal;

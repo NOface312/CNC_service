@@ -1,26 +1,49 @@
 import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
-import axiosInstance from "./../../../axios/axiosAPI";
 import Area_Menu from "./../../../helpers/menus/area_menu";
 import MainTable from "../../table/boss_area/MainTable";
-
-var data = [
-    {number: "1", area: "area 1", boss_workshop: "boss 1", date: "01-01-2020", comment: "text 1", status: "In Progress"},
-    {number: "2", area: "area 2", boss_workshop: "boss 2", date: "02-01-2020", comment: "text 2", status: "In Progress"},
-    {number: "3", area: "area 3", boss_workshop: "boss 3", date: "01-03-2020", comment: "text 3", status: "In Progress"},
-]
+import axiosInstance from "./../../../axios/axiosAPI";
+import Workshop_Services from './../../../services/workshop/workshop_services';
+import jwt_decode from 'jwt-decode';
 
 class Boss_Area_Main extends Component {
     constructor(props) {
         super(props);
-        this.state;
+        this.state = {
+            requests: [],
+        };
+        this.getallrequests = this.getallrequests.bind(this);
+    }
+
+    async getallrequests() {
+        try {
+            const token = localStorage.getItem("access_token");
+            var decoded = jwt_decode(token);
+            var FIO = decoded.fio;
+            let response = await Workshop_Services.get('/for_trouble/');
+            let filter_data = [];
+            for (let index = 0; index < response.data.length; index++) {
+                if (response.data[index].boss_area == FIO) {
+                    filter_data.push(response.data[index]);
+                }
+            }
+            this.setState({
+                requests: filter_data,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    componentDidMount() {
+        this.getallrequests();
     }
 
     render() {
         return (
             <div>
                 <Area_Menu/>
-                <MainTable data={data}/>
+                <MainTable data={this.state.requests}/>
             </div>
         )
     }

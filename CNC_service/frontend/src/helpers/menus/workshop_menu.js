@@ -18,7 +18,7 @@ class Workshop_Menu extends React.Component {
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
             axiosInstance.defaults.headers['Authorization'] = null;
-            this.props.history.push("/login/");
+            location.reload();
             return response;
         }
         catch (e) {

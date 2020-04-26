@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const Workshop_Services = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/f_man/',
+    baseURL: 'http://127.0.0.1:8000/api/workshop/',
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json',
